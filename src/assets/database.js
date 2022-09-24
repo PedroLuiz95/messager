@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
+import mysql from 'mysql2/promise'
 //import dotenv from "dotenv"
 //dotenv.config({path:".ENV"})
 const MONGODB_URI = process.env.DB_CONNECTION_URL;
@@ -19,7 +20,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function db() {
+async function mongoDb() {
   if (cached.conn) {
     return cached.conn;
   }
@@ -41,5 +42,18 @@ async function db() {
   cached.conn = await cached.promise;
   return cached.conn;
 }
+async function mysqlDb() {
+  if (global.connection && global.connection.state != 'disconected') {
+    return global.connection
+  }
+  let con = mysql.createConnection({
+    host: '172.19.2.221',
+    user: 'root',
+    password: 'senha123',
+    database: 'maxx_mk'
+  })
+  global.connection = con
+  return con
+}
 
-export default db;
+export { mysqlDb, mongoDb };

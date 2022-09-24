@@ -1,0 +1,2 @@
+docker pull mysql
+docker run -d --name mysql-container -p 3306:3306 -e MYSQL_ROOT_PASSWORD=RootPassword -e MYSQL_DATABASE=maxx_mk -e MYSQL_USER=usuario -e MYSQL_ROOT_PASSWORD=senha123 -e MYSQL_PASSWORD=senha123 mysql --default-authentication-plugin=mysql_native_password

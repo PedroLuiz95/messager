@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const document = 'number'
 
 const Schema = new mongoose.Schema({
-  number: String,
+  userNumber: String,
   date: Date
 })
 
