@@ -1,0 +1,29 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "lint": "next lint",
+    "start": "cross-env NODE_ENV=production node src/server_http.js",
+    "dev": "cross-env NODE_ENV=dev node src/server_http.js",
+    "fstart": "cross-env NODE_ENV=production  pm2 start ecosystem.config.js",
+    "fstop": "cross-env NODE_ENV=production pm2 stop ecosystem.config.js",
+    "deploy": "npm run fstop && npm run fstart",
+    "build:deploy": "next build && npm run deploy"
+  },
+  "dependencies": {
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.13.3",
+    "nextjs-cors": "^2.1.0",
+    "pm2": "^5.1.2"
+  },
+  "devDependencies": {
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1"
+  }
+}
