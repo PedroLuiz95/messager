@@ -13,7 +13,9 @@ app.prepare().then(() => {
     if (err) throw err
     console.log('> Ready on http://localhost:80')
     try{
-      await axios.get('http://localhost/api/cron')
+      if(process.env.HANDLE_ON_START == '0'){
+        await axios.get('http://localhost/api/cron')
+      }
     }catch(e){
       
     }

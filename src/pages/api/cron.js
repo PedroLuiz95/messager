@@ -1,9 +1,14 @@
 import { CronJob } from "cron";
-import Extraction from '../../tasks/extraction'
+import HandleMessage from '../../tasks/HandleMessage'
 export default async function handler(req, res) {
+  console.log('Iniciando Cron')
   const Jobs = []
   const zone = 'America/Sao_Paulo'
-  Jobs.push(new CronJob('* * * * *',Extraction,null,null,zone))
+  //Envia a tarefa de enviar as mensagens para os numeros inadimplentes
+  const period = process.env.EXTRACT_PERIOD || '* * * * *'
+  Jobs.push(new CronJob(period,HandleMessage,null,null,zone))
+  
+  //Inicia todas as tarefas
   Jobs.map((i)=>{
     i.start()
   })
