@@ -1,6 +1,6 @@
 import { mongoDb } from "../../assets/database.js"
-import message_template from "../../models/messageTemplate"
-export default async function messageTemplateFactory(option, data = {}) {
+import table from "../../models/log"
+export default async function logFatory(option, data = {}) {
   await mongoDb()
   let out
   if (option === 'insert') out = await insert(data)
@@ -10,23 +10,23 @@ export default async function messageTemplateFactory(option, data = {}) {
   return out
 }
 async function getAll(data = {}) {
-  const out = await message_template.find()
+  const out = await table.find()
   return out
 }
 async function getOne(data = {}) {
-  const out = await message_template.find(data)
+  const out = await table.find(data)
   return out
 }
 async function insert(data = {}) {
   const query = {
     name: data.name
   }
-  await message_template.create(data)
+  await table.create(data)
 
 }
 async function deleteMessage(data) {
   const query = {
     name: data.name
   }
-  return await message_template.deleteOne(query)
+  return await table.deleteOne(query)
 }

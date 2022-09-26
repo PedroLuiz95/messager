@@ -7,7 +7,9 @@ export default async function handler(req, res) {
   const zone = 'America/Sao_Paulo'
   //Envia a tarefa de enviar as mensagens para os numeros inadimplentes
   const period = process.env.EXTRACT_PERIOD || '* * * * *'
-  Jobs.push(new CronJob(period,HandleMessage,null,null,zone))
+  //Inicializa a tarefa com a template de mensagens 1
+  const template1 = new HandleMessage('mensagem cobrança teste')
+  Jobs.push(new CronJob(period,()=>{template1.handler()}),null,null,zone)
   
   //Cria a tarefa de limpeda dos numeros no desbloqueio de confiança
   Jobs.push(new CronJob('* * * * *',CleanTrustNumbers,null,null,zone))
