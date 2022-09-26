@@ -35,6 +35,5 @@ async function sendMessage(metaData) {
     statusCode : response.request.res.statusCode,
     data : response.data
   }
-  console.log(outResponse)
   return outResponse
 }

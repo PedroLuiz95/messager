@@ -6,7 +6,11 @@ export default async function handler(req, res) {
   console.log('Iniciando Cron')
   const period = process.env.EXTRACT_PERIOD || '* * * * *'
   //Inicializa a tarefa com a template de mensagens 1
-  const template1 = new HandleMessage('mensagem cobrança teste')
+  const configHandleMessage = {
+    beforeExpire : 'mensagem cobrança teste',
+    afterExpire : 'Depois de vencer'
+  }
+  const template1 = new HandleMessage(configHandleMessage)
   // Jobs.push(new CronJob(period, () => { template1.handler() }), null, null, zone)
   cron.schedule(period, () => { template1.handler() })
   //Cria a tarefa de limpeda dos numeros no desbloqueio de confiança
