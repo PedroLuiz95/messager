@@ -2,6 +2,7 @@ import getInadimplentNumbers from "../assets/factory/extractNumbers";
 import cleanInadimplentNumbers from "../assets/factory/cleanInadimplentNumbers";
 import handleMetadata from "../assets/factory/handleMetadata";
 import messageTemplateFactory from "../assets/factory/messageTemplate";
+import handleSendMessage from "../assets/factory/handleSendMessage";
 class HandleMessage {
   constructor(templateMessageName) {
     this.templateMessageName = templateMessageName
@@ -11,10 +12,12 @@ class HandleMessage {
     const cleanedInadimplentNumbers = await cleanInadimplentNumbers(inadimplentNumbers)
     const templateMessage = await messageTemplateFactory('list', { name: this.templateMessageName })
     let metaData
-    if(templateMessage.length === 1){
+    if (templateMessage.length === 1) {
       metaData = await handleMetadata(cleanedInadimplentNumbers, templateMessage)
+      metaData.map(async (i) => {
+        await handleSendMessage(i)
+      })
     }
-    console.log(metaData)
     return
   }
 }
