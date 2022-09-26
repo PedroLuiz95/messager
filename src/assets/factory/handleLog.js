@@ -1,4 +1,4 @@
-import { mongoDb } from "../../assets/database.js"
+import { mongoDb } from "../database.js"
 import table from "../../models/log"
 export default async function logFatory(option, data = {}) {
   await mongoDb()

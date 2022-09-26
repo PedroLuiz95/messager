@@ -1,7 +1,8 @@
-import { mysqlDb } from "../../assets/database"
+import { postgreSql } from "../../assets/database"
 export default async function handler() {
-  const conn = await mysqlDb()
+  const conn = await postgreSql()
   const queryToGerNumbers = 'SELECT * FROM numeros_inadimplentes'
   const out = await conn.query(queryToGerNumbers)
-  return out[0]
+  console.log(out)
+  return out
 }

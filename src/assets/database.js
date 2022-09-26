@@ -1,5 +1,6 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import mysql from 'mysql2/promise'
+import pgs from 'pg-promise'
 //import dotenv from "dotenv"
 //dotenv.config({path:".ENV"})
 const MONGODB_URI = process.env.DB_CONNECTION_URL;
@@ -55,5 +56,19 @@ async function mysqlDb() {
   global.connection = con
   return con
 }
+async function postgreSql() {
+  if (global.postgreConnection && global.postgreConnection.state != 'disconected') {
+    return global.postgreConnection
+  }
+  const user = process.env.POSTGRES_USERNAME
+  const password = process.env.POSTGRES_PASSWORD
+  const host = process.env.POSTGRES_HOST
+  const port = process.env.POSTGRES_PORT
+  const database = process.env.POSTGRES_DATABASE
+  const urlConnection = `postgres://${user}:${password}@${host}:${port}/${database}`
+  const db = pgs({})(urlConnection)
+  global.postgreConnection = db
+  return db
+}
 
-export { mysqlDb, mongoDb };
+export { mysqlDb, mongoDb, postgreSql };
