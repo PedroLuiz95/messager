@@ -6,6 +6,7 @@ export default async function logFatory(option, data = {}) {
   if (option === 'insert') out = await insert(data)
   if (option === 'list_all') out = await getAll()
   if (option === 'list') out = await getOne(data)
+  if (option === 'list_filter') out = await getFilter(data)
   if (option === 'delete') out = await deleteMessage(data)
   return out
 }
@@ -14,6 +15,10 @@ async function getAll(data = {}) {
   return out
 }
 async function getOne(data = {}) {
+  const out = await table.find(data)
+  return out
+}
+async function getFilter(data = {}){
   const out = await table.find(data)
   return out
 }
