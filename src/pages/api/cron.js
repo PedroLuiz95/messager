@@ -1,5 +1,6 @@
 import { CronJob } from "cron";
 import HandleMessage from '../../tasks/HandleMessage'
+import CleanTrustNumbers from "../../tasks/cleanTrustNumbers";
 export default async function handler(req, res) {
   console.log('Iniciando Cron')
   const Jobs = []
@@ -8,6 +9,9 @@ export default async function handler(req, res) {
   const period = process.env.EXTRACT_PERIOD || '* * * * *'
   Jobs.push(new CronJob(period,HandleMessage,null,null,zone))
   
+  //Cria a tarefa de limpeda dos numeros no desbloqueio de confiança
+  Jobs.push(new CronJob('* * * * *',CleanTrustNumbers,null,null,zone))
+
   //Inicia todas as tarefas
   Jobs.map((i)=>{
     i.start()
