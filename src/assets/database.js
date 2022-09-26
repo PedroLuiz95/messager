@@ -47,10 +47,10 @@ async function mysqlDb() {
     return global.connection
   }
   let con = mysql.createConnection({
-    host: '172.19.2.221',
-    user: 'root',
-    password: 'senha123',
-    database: 'maxx_mk'
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE
   })
   global.connection = con
   return con
