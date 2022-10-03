@@ -1,6 +1,19 @@
 import logFatory from "./handleLog"
 import axios from "axios"
+import fs from 'fs'
+const number_client = 'Celular'
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 export default async function handleSendMessage(metaData) {
+  const debub = process.env.SEND_DEBUG_MESSAGE ? parseInt(process.env.SEND_DEBUG_MESSAGE) : 0
+  if (debub) {
+    metaData[number_client] = '31991331324'
+    console.log(metaData)
+  }
+  // await sleep(1000)
   const returnMessage = await sendMessage(metaData)
   const query = {
     date: new Date(Date.now()),
@@ -14,26 +27,37 @@ export default async function handleSendMessage(metaData) {
 async function sendMessage(metaData) {
   const urlParams = new URLSearchParams({
     line: process.env.WHATSAPP_SOURCE_NUMBER,
-    destiny: metaData.numero,
+    destiny: metaData[number_client],
     text: encodeURI(metaData.textMessage)
   })
-  
+
   const bodyParams = new URLSearchParams({
-    App : process.env.WHATSAPP_API_APP_NAME,
-    AccessKey : process.env.WHATSAPP_API_ACCESS_KEY
+    App: process.env.WHATSAPP_API_APP_NAME,
+    AccessKey: process.env.WHATSAPP_API_ACCESS_KEY
   })
   const baseUrl = `${process.env.WHATSAPP_API_BASE_URL}${urlParams}`
   const auth = {
-    auth : {
-      username : process.env.WHATSAPP_API_AUTH_USERNAME,
-      password : process.env.WHATSAPP_API_AUTH_PASSWORD
+    auth: {
+      username: process.env.WHATSAPP_API_AUTH_USERNAME,
+      password: process.env.WHATSAPP_API_AUTH_PASSWORD
     }
   }
-  const response = await axios.post(baseUrl,bodyParams,auth)
-  const outResponse = {
-    message : response.request.res.statusMessage,
-    statusCode : response.request.res.statusCode,
-    data : response.data
+  let response
+  let outResponse
+  try {
+    response = await axios.post(baseUrl, bodyParams, auth)
+    outResponse = {
+      message: response.request.res.statusMessage,
+      statusCode: response.request.res.statusCode,
+      data: response.data
+    }
+  } catch (error) {
+    outResponse = {
+      message: 'erro',
+      statusCode: 400,
+      data: 'erro'
+    }
   }
+  console.log(outResponse)
   return outResponse
 }

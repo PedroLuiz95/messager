@@ -20,10 +20,10 @@ class HandleMessage {
       let metaData
       if (templateMessage.length === 1) {
         metaData = await handleMetadata(cleanedInadimplentNumbers, templateMessage)
-        metaData.map(async (i) => {
-          await handleSendMessage(i)
-
-        })
+        for( let index in metaData){
+          const i = metaData[index]
+          handleSendMessage(i)
+        }
       }
     }
     return
