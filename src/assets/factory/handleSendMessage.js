@@ -12,7 +12,7 @@ export default async function handleSendMessage(metaData) {
     metaData[number_client] = process.env.DEBUG_NUMBER
     console.log(metaData)
   }
-  await sleep(1000)
+  await sleep(process.env.WHATSAPP_SLEEP_BETWEN_MESSAGES * 1000)
   const returnMessage = await sendMessage(metaData)
   const query = {
     date: new Date(Date.now()),
