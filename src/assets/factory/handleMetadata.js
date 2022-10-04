@@ -14,7 +14,7 @@ function replateText(variables, text) {
     return i.replace(/[\$\{\}]/g, '')
   })
   arrVariableInsideTextClean.map((i) => {
-    const value = variables[i]
+    const value = specialVariable(variables[i], i)
     if (value) {
       text = text.replace(`\$\{${i}\}`, value)
     } else {
@@ -22,5 +22,15 @@ function replateText(variables, text) {
     }
   })
   return text
-
+}
+function specialVariable(text, key) {
+  const data_vencimento = 'data_vencimento'
+  const allowdKeys = [data_vencimento]
+  if (allowdKeys.includes(key)) {
+    if (key === data_vencimento) {
+      const date = new Date(text)
+      return date.toLocaleDateString("pt-BR")
+    }
+  }
+  return text
 }

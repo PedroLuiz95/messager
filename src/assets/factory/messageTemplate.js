@@ -21,6 +21,7 @@ async function insert(data = {}) {
   const query = {
     name: data.name
   }
+  data.text = convertNewLine(data.text)
   await message_template.create(data)
 
 }
@@ -29,4 +30,8 @@ async function deleteMessage(data) {
     name: data.name
   }
   return await message_template.deleteOne(query)
+}
+function convertNewLine(text) {
+  text = text.replace(/\n/g, '\\n')
+  return text
 }

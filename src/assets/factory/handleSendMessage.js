@@ -1,7 +1,6 @@
 import logFatory from "./handleLog"
 import axios from "axios"
-import fs from 'fs'
-const number_client = 'Celular'
+const number_client = 'numero'
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -10,10 +9,10 @@ function sleep(ms) {
 export default async function handleSendMessage(metaData) {
   const debub = process.env.SEND_DEBUG_MESSAGE ? parseInt(process.env.SEND_DEBUG_MESSAGE) : 0
   if (debub) {
-    metaData[number_client] = '31991331324'
+    metaData[number_client] = process.env.DEBUG_NUMBER
     console.log(metaData)
   }
-  // await sleep(1000)
+  await sleep(1000)
   const returnMessage = await sendMessage(metaData)
   const query = {
     date: new Date(Date.now()),
@@ -25,12 +24,12 @@ export default async function handleSendMessage(metaData) {
   await logFatory('insert', query)
 }
 async function sendMessage(metaData) {
+  const textEncoded = encodeURI(metaData.textMessage)
   const urlParams = new URLSearchParams({
     line: process.env.WHATSAPP_SOURCE_NUMBER,
     destiny: metaData[number_client],
-    text: encodeURI(metaData.textMessage)
+    text: textEncoded
   })
-
   const bodyParams = new URLSearchParams({
     App: process.env.WHATSAPP_API_APP_NAME,
     AccessKey: process.env.WHATSAPP_API_ACCESS_KEY
@@ -58,6 +57,5 @@ async function sendMessage(metaData) {
       data: 'erro'
     }
   }
-  console.log(outResponse)
   return outResponse
 }

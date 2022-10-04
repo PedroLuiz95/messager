@@ -22,7 +22,7 @@ class HandleMessage {
         metaData = await handleMetadata(cleanedInadimplentNumbers, templateMessage)
         for( let index in metaData){
           const i = metaData[index]
-          handleSendMessage(i)
+          await handleSendMessage(i)
         }
       }
     }

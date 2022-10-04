@@ -7,8 +7,8 @@ export default async function handler(req, res) {
   const period = process.env.EXTRACT_PERIOD || '* * * * *'
   //Inicializa a tarefa com a template de mensagens 1
   const configHandleMessage = {
-    beforeExpire : 'mensagem cobrança teste',
-    afterExpire : 'Depois de vencer'
+    beforeExpire : 'Vencimento -3 dias',
+    afterExpire : 'Vencimento +3 dias'
   }
   const template1 = new HandleMessage(configHandleMessage)
   // Jobs.push(new CronJob(period, () => { template1.handler() }), null, null, zone)
