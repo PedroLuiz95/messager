@@ -18,12 +18,13 @@ function replateText(variables, text) {
         return i.replace(/[\$\{\}]/g, '')
       })
     }
-    arrVariableInsideTextClean.map((i) => {
-      const value = specialVariable(variables[i], i)
+    
+    arrVariableInsideTextClean.map((j) => {
+      const value = specialVariable(variables[j], j)
       if (value) {
-        i = i.replace(`\$\{${i}\}`, value)
+        i = i.replace(`\$\{${j}\}`, value)
       } else {
-        i = i.replace(`\$\{${i}\}`, '')
+        i = i.replace(`\$\{${j}\}`, '')
       }
     })
     textVet.push(i)
