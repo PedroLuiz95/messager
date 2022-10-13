@@ -9,19 +9,23 @@ export default async function handleMetadata(data, textTemplate) {
   return arrOut
 }
 function replateText(variables, text) {
-  const variablesInsideText = text.match(/\$\{(\w+)\}/g)
-  const arrVariableInsideTextClean = variablesInsideText.map((i) => {
-    return i.replace(/[\$\{\}]/g, '')
-  })
-  arrVariableInsideTextClean.map((i) => {
-    const value = specialVariable(variables[i], i)
-    if (value) {
-      text = text.replace(`\$\{${i}\}`, value)
-    } else {
-      text = text.replace(`\$\{${i}\}`, '')
-    }
-  })
-  return text
+  const textVet = []
+  for (let i of text){
+    const variablesInsideText = i.match(/\$\{(\w+)\}/g)
+    const arrVariableInsideTextClean = variablesInsideText.map((i) => {
+      return i.replace(/[\$\{\}]/g, '')
+    })
+    arrVariableInsideTextClean.map((i) => {
+      const value = specialVariable(variables[i], i)
+      if (value) {
+        i = i.replace(`\$\{${i}\}`, value)
+      } else {
+        i = i.replace(`\$\{${i}\}`, '')
+      }
+    })
+    textVet.push(i)
+  }
+  return textVet
 }
 function specialVariable(text, key) {
   const data_vencimento = 'data_vencimento'

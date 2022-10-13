@@ -13,18 +13,20 @@ export default async function handleSendMessage(metaData) {
     console.log(metaData)
   }
   await sleep(process.env.WHATSAPP_SLEEP_BETWEN_MESSAGES * 1000)
-  const returnMessage = await sendMessage(metaData)
-  const query = {
-    date: new Date(Date.now()),
-    data: {
-      body: metaData,
-      output: returnMessage
+  for (let i in metaData.textMessage){
+    const returnMessage = await sendMessage(metaData,i)
+    const query = {
+      date: new Date(Date.now()),
+      data: {
+        body: metaData,
+        output: returnMessage
+      }
     }
+    await logFatory('insert', query)
   }
-  await logFatory('insert', query)
 }
-async function sendMessage(metaData) {
-  const textEncoded = encodeURI(metaData.textMessage)
+async function sendMessage(metaData,positionText) {
+  const textEncoded = encodeURI(metaData.textMessage[positionText])
   const urlParams = new URLSearchParams({
     line: process.env.WHATSAPP_SOURCE_NUMBER,
     destiny: metaData[number_client],
