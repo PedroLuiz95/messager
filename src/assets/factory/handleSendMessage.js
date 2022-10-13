@@ -53,6 +53,14 @@ async function sendMessage(metaData,positionText) {
       data: response.data
     }
   } catch (error) {
+    console.log('Erro : ')
+    console.log(error.response.data)
+    console.log("\nUrl :")
+    console.log(baseUrl)
+    console.log("\nBody :")
+    console.log(bodyParams)
+    console.log("\nAuth :")
+    console.log(auth)
     outResponse = {
       message: 'erro',
       statusCode: 400,

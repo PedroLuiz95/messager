@@ -21,7 +21,10 @@ async function insert(data = {}) {
   const query = {
     name: data.name
   }
-  data.text = convertNewLine(data.text)
+  for (let i in data.text) {
+    data.text[i] = convertNewLine(data.text[i])
+  }
+  console.log(data)
   await message_template.create(data)
 
 }

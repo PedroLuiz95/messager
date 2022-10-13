@@ -6,7 +6,7 @@ const Schema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  text: String
+  text: {}
 })
 
 export default mongoose.models[document] || mongoose.model(document, Schema)

@@ -10,11 +10,14 @@ export default async function handleMetadata(data, textTemplate) {
 }
 function replateText(variables, text) {
   const textVet = []
-  for (let i of text){
+  for (let i of text) {
     const variablesInsideText = i.match(/\$\{(\w+)\}/g)
-    const arrVariableInsideTextClean = variablesInsideText.map((i) => {
-      return i.replace(/[\$\{\}]/g, '')
-    })
+    let arrVariableInsideTextClean = []
+    if (variablesInsideText != null) {
+      arrVariableInsideTextClean = variablesInsideText.map((i) => {
+        return i.replace(/[\$\{\}]/g, '')
+      })
+    }
     arrVariableInsideTextClean.map((i) => {
       const value = specialVariable(variables[i], i)
       if (value) {
