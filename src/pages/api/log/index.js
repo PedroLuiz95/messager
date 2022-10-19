@@ -1,4 +1,4 @@
-import log from "../../../factory/handleLog"
+import log from "../../../assets/factory/handleLog.js"
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const params = req.query

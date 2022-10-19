@@ -1,16 +1,12 @@
 // import { CronJob } from "cron";
 import cron from "node-cron";
-import HandleMessage from '../../tasks/HandleMessage'
 import CleanTrustNumbers from "../../tasks/cleanTrustNumbers";
+import { StartSendCicleController } from "../../Controller/startSendCicle";
 export default async function handler(req, res) {
   console.log('Iniciando Cron')
   const period = process.env.EXTRACT_PERIOD || '* * * * *'
   //Inicializa a tarefa com a template de mensagens 1
-  const configHandleMessage = {
-    beforeExpire : process.env.CONFIG_ANTES_VENCIMENTO_TITULO_MENSAGEM,
-    afterExpire : process.env.CONFIG_DEPOIS_VENCIMENTO_TITULO_MENSAGEM
-  }
-  const template1 = new HandleMessage(configHandleMessage)
+  const template1 = await StartSendCicleController()
   // Jobs.push(new CronJob(period, () => { template1.handler() }), null, null, zone)
   cron.schedule(period, () => { template1.handler() })
   //Cria a tarefa de limpeda dos numeros no desbloqueio de confiança
