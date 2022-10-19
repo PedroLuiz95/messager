@@ -1,4 +1,4 @@
-import handlerMessager from "../../../tasks/HandleMessage"
+import handlerMessager from "../../tasks/HandleMessage"
 export default async function handler(req, res) {
   const configHandleMessage = {
     beforeExpire: 'Vencimento -3 dias',
