@@ -1,27 +1,25 @@
-import { mongoDb } from "../../../assets/database.js"
-import message_template from "../../../models/messageTemplate.js"
-export default async function messageTemplateFactory(option, data = {}) {
-  await mongoDb()
-  let out
-  if (option === 'insert') out = await insert(data)
-  if (option === 'list_all') out = await getAll()
-  if (option === 'delete') out = await deleteMessage(data)
-  return out
-}
-async function getAll(data = {}) {
-  const out = await message_template.find()
-  return out
-}
-async function insert(data = {}) {
-  const query = {
-    name: data.name
-  }
-  await message_template.create(data)
+import messageTemplateFactory from "../../../assets/factory/messageTemplate.js"
+export default async function handler(req, res) {
+  if(req.method === 'GET'){
+    const out = await messageTemplateFactory('list_all')
+    res.status(200).json(out)
 
-}
-async function deleteMessage(data) {
-  const query = {
-    name: data.name
+  }else if(req.method === 'POST'){
+    try{
+      const out = await messageTemplateFactory('insert',req.body)
+      res.status(200).json(out)
+      
+    }catch(e){
+      console.log(e)
+      res.status(400).json({error:'Nome duplicado'})
+    }
+
+  }else if (req.method === 'DELETE'){
+    const out = await messageTemplateFactory('delete',req.body)
+    res.status(200).json(out)
   }
-  return await message_template.deleteOne(query)
+  else{
+    res.status(200).json()
+  }
+
 }
