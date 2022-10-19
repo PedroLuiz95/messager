@@ -2,7 +2,7 @@ import { postgreSql } from "../../assets/database"
 export default async function handler(mode) {
   const conn = await postgreSql()
   let queryToGerNumbers
-  const limit = 1
+  const limit = parseInt(process.env.CONFIG_LIMIT_RETURN_QUERYS)
   if (mode === 'beforeExpire') {
     queryToGerNumbers = `select cd_pessoa as "cod_cliente",
     nome_razaosocial as "nome",

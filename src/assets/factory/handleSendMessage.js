@@ -10,7 +10,6 @@ export default async function handleSendMessage(metaData) {
   const debub = process.env.SEND_DEBUG_MESSAGE ? parseInt(process.env.SEND_DEBUG_MESSAGE) : 0
   if (debub) {
     metaData[number_client] = process.env.DEBUG_NUMBER
-    console.log(metaData)
   }
   await sleep(process.env.WHATSAPP_SLEEP_BETWEN_MESSAGES * 1000)
   for (let i in metaData.textMessage){
@@ -28,6 +27,7 @@ export default async function handleSendMessage(metaData) {
 }
 async function sendMessage(metaData,positionText) {
   const text = metaData.textMessage[positionText]
+  console.log(text)
   const textEncoded = encodeURI(text)
   const urlParams = new URLSearchParams({
     line: process.env.WHATSAPP_SOURCE_NUMBER,
@@ -54,7 +54,6 @@ async function sendMessage(metaData,positionText) {
       statusCode: response.request.res.statusCode,
       data: response.data
     }
-    console.log(outResponse)
   } catch (error) {
     console.log('Erro : ')
     console.log(error.response.data)
