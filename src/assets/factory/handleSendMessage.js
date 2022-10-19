@@ -15,6 +15,7 @@ export default async function handleSendMessage(metaData) {
   await sleep(process.env.WHATSAPP_SLEEP_BETWEN_MESSAGES * 1000)
   for (let i in metaData.textMessage){
     const returnMessage = await sendMessage(metaData,i)
+    await sleep(1000)
     const query = {
       date: new Date(Date.now()),
       data: {
@@ -26,7 +27,8 @@ export default async function handleSendMessage(metaData) {
   }
 }
 async function sendMessage(metaData,positionText) {
-  const textEncoded = encodeURI(metaData.textMessage[positionText])
+  const text = metaData.textMessage[positionText]
+  const textEncoded = encodeURI(text)
   const urlParams = new URLSearchParams({
     line: process.env.WHATSAPP_SOURCE_NUMBER,
     destiny: metaData[number_client],
@@ -52,6 +54,7 @@ async function sendMessage(metaData,positionText) {
       statusCode: response.request.res.statusCode,
       data: response.data
     }
+    console.log(outResponse)
   } catch (error) {
     console.log('Erro : ')
     console.log(error.response.data)
