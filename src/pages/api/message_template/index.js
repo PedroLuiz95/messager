@@ -1,5 +1,5 @@
-import { mongoDb } from "../../assets/database.js"
-import message_template from "../../models/messageTemplate.js"
+import { mongoDb } from "../../../assets/database.js"
+import message_template from "../../../models/messageTemplate.js"
 export default async function messageTemplateFactory(option, data = {}) {
   await mongoDb()
   let out
