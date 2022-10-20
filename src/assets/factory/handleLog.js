@@ -11,15 +11,15 @@ export default async function logFatory(option, data = {}) {
   return out
 }
 async function getAll(data = {}) {
-  const out = await table.find()
+  const out = await table.find({}).sort({ _id: -1 })
   return out
 }
 async function getOne(data = {}) {
   const out = await table.find(data)
   return out
 }
-async function getFilter(data = {}){
-  const out = await table.find(data)
+async function getFilter(data = {}) {
+  const out = await table.find(data).sort({ _id: -1 })
   return out
 }
 async function insert(data = {}) {

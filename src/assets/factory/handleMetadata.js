@@ -18,7 +18,7 @@ function replateText(variables, text) {
         return i.replace(/[\$\{\}]/g, '')
       })
     }
-    
+
     arrVariableInsideTextClean.map((j) => {
       const value = specialVariable(variables[j], j)
       if (value) {
@@ -33,11 +33,18 @@ function replateText(variables, text) {
 }
 function specialVariable(text, key) {
   const data_vencimento = 'data_vencimento'
-  const allowdKeys = [data_vencimento]
+  const cpf = 'cpf'
+  const allowdKeys = [data_vencimento, cpf]
   if (allowdKeys.includes(key)) {
     if (key === data_vencimento) {
       const date = new Date(text)
       return date.toLocaleDateString("pt-BR")
+    }else if(key === cpf){
+      let newCpf = "CPF"
+      try {
+        newCpf = text.replace(/^(...).*(..)$/,'$1.xxx.xxx-$2')
+      } catch (error) {}
+      return newCpf
     }
   }
   return text

@@ -11,7 +11,8 @@ export default async function handler(mode) {
     fone01 as "numero",
     email as "email",
     codigo_barras, 
-    linha_digitavel
+    linha_digitavel,
+    cpf
   from mk_faturas
   inner join mk_pessoas on cd_pessoa = codpessoa
   inner join mk_boletos_gerados on cd_fatura=codfatura and substituido='N'
@@ -24,7 +25,8 @@ export default async function handler(mode) {
     fone01 as "numero",
     email as "email",
     codigo_barras, 
-    linha_digitavel
+    linha_digitavel,
+    cpf
   from mk_faturas
   inner join mk_pessoas on cd_pessoa = codpessoa
   inner join mk_boletos_gerados on cd_fatura=codfatura and substituido='N'
