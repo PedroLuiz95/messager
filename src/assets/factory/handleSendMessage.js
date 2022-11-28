@@ -3,6 +3,7 @@ import axios from "axios"
 const number_client = 'numero'
 function sleep(ms) {
   return new Promise((resolve) => {
+    console.log(ms)
     setTimeout(resolve, ms);
   });
 }
@@ -56,7 +57,9 @@ async function sendMessage(metaData,positionText) {
     }
   } catch (error) {
     console.log('Erro : ')
-    console.log(error.response.data)
+    try {
+      console.log(error)
+    } catch (e) {}
     console.log("\nUrl :")
     console.log(baseUrl)
     console.log("\nBody :")

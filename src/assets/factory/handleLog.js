@@ -26,6 +26,7 @@ async function insert(data = {}) {
   const query = {
     name: data.name
   }
+  console.log(data)
   await table.create(data)
 
 }
